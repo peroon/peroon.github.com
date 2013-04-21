@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset='utf-8'>
-    <title>peroon's github pages by peroon</title>
+    <title>peroon's github pages</title>
 
     <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
@@ -10,18 +10,36 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
     <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    
+
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+	
     <script type="text/javascript">
+    //on load
     $(function(){
-        $("#test_button").click(function(){
-            $("#test_text").text("after text");
+
+        //toggle
+        //$('#about_me').css('display', 'none');
+        $('#about_me_toggle').on('click', function(){
+                $('#about_me').slideToggle();
         });
+
+        //$('#my_works').css('display', 'none');
+        $('#my_works_toggle').on('click', function(){
+                $('#my_works').slideToggle();
+        });
+
+        //$('#web_account').css('display', 'none');
+        $('#web_account_toggle').on('click', function(){
+                $('#web_account').slideToggle();
+        });
+
     });
-    </script>
+	</script>
   </head>
 
   <body>
+    <!--centering-->
     <div id="container">
       <div class="inner">
 
@@ -29,37 +47,45 @@
           <h1>peroon's github pages</h1>
         </header>
 
+        <!--github-->
         <section id="downloads" class="clearfix">
           <a href="https://github.com/peroon" id="view-on-github" class="button"><span>View on GitHub</span></a>
         </section>
 
-        <hr>
+        <span class="label label-success">About Me</span>
+        <a id="about_me_toggle">toggle</a>
+        <div id="about_me">
+                I major in
+                <ul>
+                        <li>Computer Science</li>
+                        <li>Statistics</li>
+                        <li>Image Recognition by Machine Learning</li>
+                        <li>at Kyushu University (2004/4-2010/3)</li>
+                </ul>
+                I work at Namco Bandai Studios as Game Programmer. (2010/4-)
+        </div>
+        <br>
 
-        <section id="main_content">
-          <p>welcome!</p>
-
-          <div id="test_text">i am text</div>
-
-            <button type="button" id="test_button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-              text change button
-            </button>
-            <br>
-
-            <span class="label">Default</span>
-            <span class="label label-success">Success</span>
-            <span class="label label-warning">Warning</span>
-            <span class="label label-important">Important</span>
-            <span class="label label-info">Info</span>
-
-        </section>
-
-        <a href="./sandbox.html">sandbox</a>
-
-        <footer>
-          I am footer.
-        </footer>
-
+        <span class="label label-warning">My Works</span>
+        <a id="my_works_toggle">toggle</a>
+        <div id="my_works">
+                <a href="">Github</a><br>
+                <a href="">Niconico</a><br>
+                <a href="">slideshare</a><br>
+                <a href="">enchantJS</a><br>
+                <a href="">ProcessingJS</a><br>
+        </div>
+        <br>
         
+        <span class="label label-info">Web Account</span>
+        <a id="web_account_toggle">toggle</a>
+        <div id="web_account">
+                <a href="">Google+</a><br>
+                <a href="">Facebook</a><br>
+                <a href="">Cookpad</a><br>
+        </div>
+        <br>
+
       </div>
     </div>
   </body>
