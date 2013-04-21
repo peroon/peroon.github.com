@@ -1,0 +1,34 @@
+<h3>Processing.js<h3>
+
+<head>
+<script src="http://cloud.github.com/downloads/processing-js/processing-js/processing-1.4.1.min.js"></script>
+</head>
+
+<body>
+<script type="application/processing">
+void setup() 
+{
+        size(200, 200);  // Size should be the first statement
+        stroke(255);     // Set stroke color to white
+        noLoop();
+}
+
+float y = 100;
+
+void draw() 
+{ 
+        background(0);   // Set the background to black
+        line(0, y, width, y);  
+        y = y - 1; 
+        if (y < 0) { 
+        y = height; 
+        } 
+} 
+void mousePressed() 
+{
+        loop();
+}
+</script>
+<canvas width="200" height="200"></canvas></p>
+
+</body>

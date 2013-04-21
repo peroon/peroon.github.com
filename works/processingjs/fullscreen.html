@@ -1,0 +1,305 @@
+<html>
+<head>
+<style type="text/css">
+<title>fullscreen sample by fladdict</title>
+<!--
+body{
+	margin:0px
+}
+-->  
+</style>  
+<script src="http://cloud.github.com/downloads/processing-js/processing-js/processing-1.4.1.min.js"></script>
+
+<script>
+window.onload = function(){
+	var canvas = document.getElementsByTagName("canvas")[0];
+	var codeElm = document.getElementById("processing-code");
+	var code = codeElm.textContent || codeElm.innerHText;
+	new Processing(canvas, code);
+}
+</script>
+
+<script id="processing-code" type="application/processing">
+var nodes = [];
+var numberOfNodes = 20;
+var pressedCount = 0;
+var pressedX;
+var pressedY;
+var calcTable;
+var lineAlpha = 0;
+
+void setup(){
+	size(window.innerWidth,window.innerHeight);
+	background(0,0,0);
+	//For FullScreen
+	window.onresize = function()
+	{
+		size(window.innerWidth,window.innerHeight);
+	};
+	
+	setup2();
+}
+
+void setup2(){
+	for(var i=0; i<numberOfNodes; i++){
+		var nd = new Node();
+		nd.x = random() * width;
+		nd.y = random() * height;
+		nd.nodes = nodes;
+		nd.nodeType = int(random()*2);
+		nodes.push(nd);
+	};
+	
+	//高速化テーブル	[NodeXId][NodeYId][dx,dy,dist];
+	//あとで採用して最適化すること
+	calcTable = [];
+	for(var yy=0; i<numberOfNodes; yy++){
+		var ar = [];
+		for(var xx=0; j<numberOfNodes; xx++){
+			ar.push([0,0,0]);
+		}
+		calcTable.push(ar);
+	}
+}
+
+void draw(){
+	colorMode(RGB,255);
+	fill(0);
+	noStroke();
+	rect(0,0,width,height);
+	
+	var n = nodes.length;
+	if(pressedCount>0){
+		pressedCount--;
+		
+		for(var i=0; i<n; i++){
+			var nd = nodes[i];
+			nd.maxVelocity=3;
+			nd.friction = 0.99;
+			nd.updateVelocity();
+			nd.updatePosition();
+		};
+	}else{
+		lineAlpha = lineAlpha + (1-lineAlpha)*0.01;
+		for(var i=0; i<n; i++){
+			var nd = nodes[i];
+			nd.maxVelocity=1;
+			nd.friction = 0.9;
+			nd.resetForce();
+			nd.update();
+		};
+	}
+	
+	
+	for(var i=0; i<n; i++)
+	{
+		for(var j=i; j<n; j++)
+		{
+			var nd0 = nodes[i];
+			var nd1 = nodes[j];
+			if(nd0!=nd1){
+				var dx = nd1.x - nd0.x;
+				var dy = nd1.y - nd0.y;
+				var dist = sqrt(dx*dx+dy*dy);
+				if(dist<150 && dist!=0 && nd0.nodeType==nd1.nodeType){
+					//255で0、 100で1
+					// (255-dist);
+					var strokeCol = (150-dist)*1.5;
+					stroke(strokeCol * lineAlpha);
+					line(nd0.x, nd0.y, nd1.x, nd1.y);
+				}
+			}
+		}
+	}
+	
+	for(var i=0; i<n; i++){
+		var nd = nodes[i];
+		nd.draw();
+	};
+}
+
+void mousePressed()
+{
+	pressedCount = 120;
+	pressedX = mouseX;
+	pressedY = mouseY;
+	lineAlpha = 0;
+	
+	var n = nodes.length;
+	for(var i=0; i<n; i++){
+		var nd = nodes[i];
+		var fx = nd.x - mouseX;
+		var fy = nd.y - mouseY;
+		var dist = sqrt(fy*fy+fx*fx);
+		var rad = atan2(fy,fx);
+		if(dist>1){
+			nd.fx += cos(rad)/dist*800;
+			nd.fy += sin(rad)/dist*800;
+			nd.updateVelocity();
+			nd.updatePosition();
+		}
+	};
+}
+
+
+function Node(){
+	this.x =0;
+	this.y = 0;
+	this.vx = 0;
+	this.vy = 0;
+	this.maxVelocity = 2;
+	this.fx = 0;
+	this.fy = 0;
+	this.nodeType;
+	this.rotation = 0;
+	this.nodes;
+	this.friction = 0.9;
+}
+
+Node.prototype.init = function()
+{
+}
+
+Node.prototype.update = function()
+{
+	this.updateBoid();
+	this.updateVelocity();
+	this.updatePosition();
+}
+
+Node.prototype.resetForce = function()
+{
+	this.fx = 0;
+	this.fy = 0;
+}
+
+Node.prototype.updateBoid = function()
+{
+	//ここでBoid計算
+	var n = this.nodes.length;
+	
+	//Calc Position
+	var deathCount = 0;
+	var fx = 0;
+	var fy = 0;
+	
+	//仲間に近づく / 離れる
+	for(var i=0; i<n; i++){
+		var nd = this.nodes[i];
+		if(nd==this)
+			continue;
+			
+		var dx = nd.x - this.x;
+		var dy = nd.y - this.y;
+		var dist = sqrt(dx*dx+dy*dy);
+		if(dist<50 && dist>1){
+			deathCount++;
+			fx -= dx / dist / dist / dist * 40;
+			fy -= dy / dist / dist / dist * 40;
+		}else if(dist<200 && this.nodeType==nd.nodeType){
+			fx += dx / dist / dist / dist * 30;
+			fy += dy / dist / dist / dist * 30;
+		}
+	}
+	
+	//仲間と同じ方向に移動する
+	for(var i=0; i<n; i++){
+		var nd = this.nodes[i];
+		if(nd==this)
+			continue;
+		
+		var dx = nd.x - this.x;
+		var dy = nd.y - this.y;
+		var dist = sqrt(dx*dx+dy*dy);
+		if(dist>1){
+			var vx = nd.vx;
+			var vy = nd.vy;
+			var rad = atan2(vy,vx);
+			fx += cos(rad) /dist/dist;
+			fy += sin(rad) /dist/dist;
+		}
+	}
+	
+	//マウスから逃げる
+	var mfx = mouseX - this.x;
+	var mfy = mouseY - this.y;
+	var mdist = sqrt(mfx*mfx+mfy*mfy);
+	var mrad = atan2(mfy,mfx);
+	//console.log(mdist);
+	if(mdist>0){
+		fx -= cos(mrad)/mdist/mdist*300;
+		fy -= sin(mrad)/mdist/mdist*300;
+	}
+	/*
+	if(deathCount>20){
+		this.x = random()*width;
+		this.y = random()*height;
+	}*/
+	
+	//Normalize Speed
+	var d = dist(fx,fy);
+	if(d>1){
+		fx = fx / dist;
+		fy = fy / dist;
+	}
+	
+	this.fx += (random()-0.5)*0.2
+	this.fy += (random()-0.5)*0.2
+	
+	this.fx += fx * 3;
+	this.fy += fy * 3;
+}
+
+Node.prototype.updateVelocity = function()
+{
+	this.vx = this.vx * this.friction + this.fx;
+	this.vy = this.vy * this.friction + this.fy;
+	
+	var v = dist(this.vx, this.vy);
+	if(v>this.maxVelocity){
+		this.vx / v * this.maxVelocity;
+		this.vy / v * this.maxVelocity;
+	}
+}
+
+Node.prototype.updatePosition = function()
+{
+	this.x += this.vx;
+	this.y += this.vy;
+	
+	if(this.x<0){
+		this.x =0;
+		this.vx = abs(this.vx);
+		this.fx = 0;
+	}
+	if(this.x>width){
+		this.x=width;
+		this.vx = -abs(this.vx);
+		this.fx = 0;
+	}
+	
+	if(this.y<0){
+		this.y=0;
+		this.vy = abs(this.vy);
+		this.fy = 0;
+	}
+	
+	if(this.y>height){
+		this.y=height;
+		this.vy = -abs(this.vy);
+		this.fy = 0;
+	}
+}
+
+Node.prototype.draw = function()
+{
+	stroke(150);
+	ellipse(this.x, this.y, 10,10);
+}
+</script>
+</head>
+
+<body>
+	<canvas id="canvas"></canvas>
+</body>
+</html>
