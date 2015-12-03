@@ -34,14 +34,16 @@
 * Spine
 * Photoshop, Illustrator
 
-# Book
+# 執筆
 
-# Lecture
+* Unityではじめるゲームづくり（翻訳）
+
+# 講義
+
+* 学生のゲームジャムで講義（2014, 東京/大阪）
 
 
-
-
-# History
+# 履歴
 
 * Engineer at Bandai Namco Studio (Now)
 * Engineer at Bandai Namco Games (2010/04 - 2013/03)
