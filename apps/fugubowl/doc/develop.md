@@ -44,6 +44,11 @@
 
 * Confetti　アセットストアに申請したが、Too Simpleでリジェクトされたもの
 
+# ScriptableObject
+
+* シーンをまたいで共通なデータはこれで
+
+
 
 # 期間
 * メインゲーム部分のプロトタイプに1日
@@ -60,12 +65,21 @@
 # Androidの権限つけすぎ問題
 * ソーシャルアセットを入れたら、デフォルトでは権限が多く付いた
 * 不要な機能（たとえば課金）などはOFFにしておく
-* そうしないと不気味なアプリに
+* そうしないと権限大量の不気味なアプリに
+* UltimateMobileSettingsをインスペクタから編集
+* AndriodManifestをリネームして待避させ、そこからビルド
+* Parseだけなら、INTERNET, ACCESS_NETWORK_STATEの2つで十分
+
+# AndroidManifest
+
+* SystemInfo.deviceUniqueIdentifierを使うと、アクセス権限READ_PHONE_STATEが加わる
+* ユーザIDとして使っていたが、自作Static関数に移行した
+* 電話帳を見ていると思われてしまうため
 
 # アイコン
 * シンプルにしたが、手抜きに見える
 * 他のアプリを見てみよう。豪華
-
+* 手抜きのシンプルか、そぎ落としたシンプルか
 
 
 # Amazon Store
