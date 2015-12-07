@@ -48,6 +48,16 @@
 
 * シーンをまたいで共通なデータはこれで
 
+# Gist
+
+* 汎用性のあること、よく書くことはGistにも書く
+* 別のプロジェクトから参照できる
+
+
+# TODO List
+
+* Slack or Gmailの下書き or markdown
+* 明日やることをTODOにしておくとスタートが速い
 
 
 # 期間
@@ -75,6 +85,11 @@
 * SystemInfo.deviceUniqueIdentifierを使うと、アクセス権限READ_PHONE_STATEが加わる
 * ユーザIDとして使っていたが、自作Static関数に移行した
 * 電話帳を見ていると思われてしまうため
+
+# iTunesConnect
+
+* Android側が落ちついてきてからサブミットした
+
 
 # アイコン
 * シンプルにしたが、手抜きに見える
