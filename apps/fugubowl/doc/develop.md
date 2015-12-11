@@ -95,7 +95,22 @@
 
 # iTunesConnect
 
-* Android側が落ちついてきてからサブミットした
+* Android側が落ちついてきてからサブミットする
+* スクリーンショットのリサイズスクリプトいい加減書いた
+
+# Xcode
+
+* (Unity)IL2CPP(64bit support)になっているか確認（5.2ではなっておらず、Upload完了したと思ったら怒られることになる）
+* (Unity)ArchitectureもUniversalに変更
+* デバッグ実行できることを確認
+* Archiveする　(出力はOrganizerで確認できる)
+* アーカイブ結構時間かかるのぅ
+* そこからUpdate to App Storeできる
+* App IDs "wildcard"を再利用
+* Provisioning Profiles アプリごとに作成
+* アドオン入れるほど、ビルドが通るか不安になる
+
+
 
 
 # アイコン
@@ -105,6 +120,7 @@
 
 # お役立ちWebサービス
 * http://makeappicon.com/# アイコン一括リサイズ
+* アイコンPSDテンプレート
 
 
 
@@ -112,3 +128,4 @@
 
 * キャンペーンしてたのでAmazon Storeにも申請した
 * Google Play用に素材を用意していれば、リサイズで済む
+* スクリーンショットは600x1024にリサイズ
