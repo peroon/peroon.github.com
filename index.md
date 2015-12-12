@@ -1,22 +1,15 @@
-# About Me
-
-* Game Development Engineer
-* I make games at home, too.
-
+# はじめに
+* 自宅でもゲーム開発を行う、ゲームエンジニア。リソースも作るため、アートのツールも扱う
 
 # できること
 * Unityを用いたスマートフォンアプリ開発
 * PHP, HTML, CSS, Javascriptを用いたソーシャルゲーム開発
 
-# 
+# 言語
+* 日本語（母語）
+* 英語 (TOEIC 885点)
 
-# Language
-
-* Japanese
-* English (TOEIC 885)
-
-
-# Programming Language
+# プログラミング言語
 
 * C# (Unity)
 * Ruby (Batch, Tool)
@@ -25,8 +18,7 @@
 * Javascript, jQuery (Web)
 * C++, Lua (Game Development)
 
-# Other Skills
-
+# その他、扱えるツール
 * Unity
 * Jenkins
 * Git, Subversion
@@ -36,11 +28,11 @@
 
 # 執筆
 
-* Unityではじめるゲームづくり（翻訳）
+* Unityではじめるゲームづくり（翻訳の1人として参加）
 
 # 講義
 
-* 学生のゲームジャムで講義（2014, 東京/大阪）
+* 会社主催の学生向けゲームジャムで講義（2014, 東京/大阪）
 
 
 # 履歴
@@ -51,11 +43,16 @@
 * Bachelor at Kyushu University (2004/04 - 2008/03)
 
 
-# Hobby
+# 趣味
 
-* Game Development At Home
-* Training, Cycling
-* Cooking
+* 個人でもゲーム開発
+* 筋トレ
+* サイクリング
+* 料理
 
-# Account
+# アカウント
+* niconico
+* speakerdeck
+* 9leap
+* etc
 
